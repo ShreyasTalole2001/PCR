@@ -10,41 +10,75 @@
     #pcr {
       font-weight: 900;
     }
+
+    button {
+      margin-top: 5px;
+    }
+
+    #controllers {
+      margin-top: 50px;
+      position: fixed;
+    }
   </style>
-  <title>Active Strike PCR</title>
+  <title>LIVE PCR DATA</title>
 </head>
 
 <body>
 
 
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="container" style="max-width: 600px;">
 
-  <div class="container" style="max-width: 600px;">
-    <h3>Live PCR Data (Time interval 3 Minutes)</h3>
-    <hr>
-    <button onclick="clearLocalStorage()">Clear Data</button>
-    <button onclick="reloadPage()">Fetch Current Data</button>
-    <a >Expirary Date : <span id="expiraryDate"></span> </a>
+          <hr>
+          <table class="table table-dark " id="pcr_table">
+            <thead>
+              <tr>
+                <th scope="col">SYMBOL</th>
+                <th scope="col">Date (YY-MM-DD)</th>
+                <th scope="col">Time</th>
+                <th scope="col">PCR</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row"></th>
+                <td id="date"></td>
+                <td id="time"></td>
+                <td id="pcr"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-    <hr>
-    <table class="table table-dark table-striped" id="pcr_table">
-      <thead>
-        <tr>
-          <th scope="col">SYMBOL</th>
-          <th scope="col">Date (YY-MM-DD)</th>
-          <th scope="col">Time</th>
-          <th scope="col">PCR</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row"></th>
-          <td id="date"></td>
-          <td id="time"></td>
-          <td id="pcr"></td>
-        </tr>
-      </tbody>
-    </table>
+      </div>
+
+      <div class="col-sm-6">
+
+        <div id="controllers">
+          <h3>Live PCR Data</h3>
+          <hr>
+          <button onclick="clearLocalStorage()">Clear Data</button>
+          <button onclick="reloadPage()">Fetch Current Data</button>
+          <button onclick="selectTimeInterval(1)">1 Minute</button>
+          <button onclick="selectTimeInterval(3)">3 Minute</button>
+          <button onclick="selectTimeInterval(5)">5 Minute</button>
+          <button onclick="selectTimeInterval(15)">15 Minute</button>
+          <hr>
+          <p>Expirary Date : <span id="expiraryDate" style="color: red;"></span> <br>
+            Current Interval : <span id="currInterval" style="color: red;"></span> <br>
+            Active Strike : <span id="activeStrike" style="color: red;"></span>
+          </p>
+
+
+        </div>
+      </div>
+    </div>
   </div>
+
+
+
 
 
 </body>

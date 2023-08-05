@@ -3,6 +3,13 @@ if (new Date().getDay() == 7) {
     clearLocalStorage()
 }
 
+
+
+
+function reloadPage1() {
+    location.reload();
+}
+
 function reloadPage() {
     location.reload();
 }
@@ -127,6 +134,9 @@ function PCR_calculations(data) {
     console.log("Strike : " + data.filtered.data[index_ATM].strikePrice)
     console.log("PE = " + PE_SumOfChangeInOpenInterest + " " + "CE = " + CE_SumOfChangeInOpenInterest)
 
+    /* Update the Active Strike on view */ 
+    document.getElementById("activeStrike").innerHTML = data.filtered.data[index_ATM].strikePrice
+
 
     /* This populate the table */
     var date = new Date().toISOString().split('T')[0];
@@ -148,7 +158,7 @@ function fetchData() {
             // console.log(JSON.parse(response));
             var data = JSON.parse(response)
             PCR_calculations(data)
-            
+
 
             // Handle the response as needed
         } else if (xhr.readyState === 4 && xhr.status !== 200) {
@@ -161,8 +171,33 @@ function fetchData() {
     xhr.send();
 }
 
-// Call the fetchData function to initiate the AJAX request
 
+
+/* Set time interval and clear previous */ 
+function selectTimeInterval(timeInt) {
+    let timeInterval = timeInt
+
+    clearInterval(window.previousIntervalId)
+
+    if (timeInterval == 1) {
+        window.previousIntervalId = setInterval(fetchData, 60000)
+    }else if(timeInterval == 3){
+        window.previousIntervalId = setInterval(fetchData, 180000)
+    }else if(timeInterval == 5){
+        window.previousIntervalId = setInterval(fetchData, 300000)
+    }else{
+        window.previousIntervalId = setInterval(fetchData, 900000)
+    }
+
+    document.getElementById("currInterval").innerHTML = timeInterval + " Minutes"
+
+}
+
+// Call the fetchData function to initiate the AJAX request
 fetchData()
-setInterval(fetchData, 180000)
-  // setInterval(fetchData, 5000)
+selectTimeInterval(3)
+
+
+
+
+
